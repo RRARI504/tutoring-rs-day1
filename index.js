@@ -79,9 +79,24 @@ filterBySource(recipes, 'Food & Wine Magazine')
 // => [{Peanut Butter Sauce Stir Fry}, {Pasta Carbonara}]
 */
 
-function filterBySource(){
-
+function filterBySource(array, source){
+  return array.filter(function(match){
+    if(match.source === source ){
+      return true;
+    }
+  })
 }
+//console.log(filterBySource(recipes, 'Food & Wine Magazine'))
+
+/**
+  let output = [];
+  for(var i = 0; i < array.length; i++){
+    if(array[i].source === source){
+      output.push(array[i])
+    }
+  }
+  return output;
+ */
 
 /*
 Create a function called filterByTag that takes in an array of recipe objects
@@ -91,10 +106,16 @@ to return a new array of recipe objects that contain the input tag.
 example:
 filterByTag(recipes, 'Asian'); // => [{Peanut Butter Sauce Stir Fry}]
 */
-
-function filterByTag(){
-
+function filterByTag(array, string){
+  return array.filter(function(obj){
+    let arr = obj.tags;
+   if(arr.includes(string)){
+    return true;
+   }
+  })
 }
+//console.log(filterByTag(recipes, 'Asian'))
+
 
 /*
 Create a function called mapRecipes that takes in an array of recipe objects.
@@ -111,9 +132,20 @@ mapRecipes(recipes);
 ]
 */
 
-function mapRecipes(){
+function mapRecipes(array){
+  return array.map(function(obj){
+  let name = obj.name;
+  let prep = obj.prepTime;
+  let cal = obj.calories;
+
+  return `${name} - Prep time : ${prep} - Calories : ${cal}` 
+
+
+  })
 
 }
+//console.log(mapRecipes(recipes))
+
 
 /*
 Create a function called getRecipeNames that takes in an array of recipe objects.
@@ -124,9 +156,18 @@ example:
 getRecipeNames(recipes); // => ["Vegetable Medley"]
 */
 
-function getRecipeNames(){
+function getRecipeNames(array){
+  return array.reduce(function(acc, current){
+    let calories = current.calories;
+    if(calories < 600){
+      acc.push(current.name);
+    }
+    return acc;
+
+  },[])
 
 }
+//console.log(getRecipeNames(recipes))
 
 /*
 Create a function called filterByIngredient that takes in an array of recipe objects and a string
@@ -137,13 +178,24 @@ example:
 filterByIngredient('Chicken'); // => [{Peanut Butter Stir Fry Sauce}]
 */
 
-function filterByIngredient(){
+function filterByIngredient(array, string){
+  return array.filter(function(obj){
+    let ingredient = obj.ingredients;
+    for(var i = 0; i < ingredient.length; i++){
+      if(ingredient[i].description === string){
+        return true;
+      }
+
+    }
+  })
 
 }
+//console.log(filterByIngredient(recipes, 'Chicken'))
 
 /*
 Create a function called getNonMeats that takes in an array of recipe objects. This function should use the
-native map method to return a new array of strings. Each string should any non-meat ingredients followed by a line
+native map method to return a new array of strings. Each string should contain any non-meat ingredients 
+followed by a line
 break character.
 
 example: getNonMeats(recipes);
@@ -155,9 +207,22 @@ example: getNonMeats(recipes);
 ]
 */
 
-function getNonMeats(){
+function getNonMeats(array){
+  return array.map(function(obj){
+    let ingredient = obj.ingredients;
+    let string = '';
+    for(var i = 0; i < ingredient.length; i++){
+      if(ingredient[i].type !== 'Meat'){
+        string += ingredient[i].description + '\n'
+      }
+
+    }
+
+  })
+
 
 }
+console.log(getNonMeats(recipes))
 
 /*
 Create a function called getPreTimeObject that takes in an array of recipe objects. This function should use the
